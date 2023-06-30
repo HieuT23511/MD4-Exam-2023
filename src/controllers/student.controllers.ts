@@ -9,10 +9,8 @@ export class StudentControllers {
     static async createNewStudent (req:any, res:any){
         try{
         const newStudent = new studentModel(req.body)
-            if(newStudent){
                 await newStudent.save();
                 res.redirect("/student/list")
-            } else res.render("notfound")
         } catch (error){
             res.render("notfound")
         }
@@ -40,9 +38,11 @@ export class StudentControllers {
                 path:"classroom",
                 select: "name",
             })
-                res.render("detail",{student:student, classrooms:classrooms})
+            if(student){
+            res.render("detail",{student:student, classrooms:classrooms})
+            } else res.render("notfound");
         } catch (error){
-            res.render("notfound")
+            res.render("notfound");
         }
     }
 
